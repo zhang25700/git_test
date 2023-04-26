@@ -366,7 +366,12 @@
                 if (this.flag) {
                     this.brandInfo.currentPage = this.currentPage;
                 }
-                this.selectLimit();
+                if (this.sort) {
+                    this.sortChange(this.sortrow);
+                } else {
+                    this.selectLimit();
+                }
+
 
             },
             //批量删除
@@ -459,6 +464,8 @@
             //排序
             sortChange(column) {
                 console.log(column);
+                //将信息记录在sortrow中
+                this.sortrow = column;
                 console.log(column.order)
                 var order = column.order;
                 var _this = this;
@@ -545,7 +552,9 @@
                 //判断当前是否为条件查询
                 flag : false,
                 //判断是否排序
-                sort: false
+                sort: false,
+                //用于记录行的排序规则
+                sortrow: '',
             }
         }
 
