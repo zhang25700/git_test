@@ -31,7 +31,7 @@
             <if test="companyName != '' and companyName != null">
                 and company_name like #{companyName}
             </if>
-            <if test="status != '' and status != null">
+            <if test="status != null">
                 and status = #{status}
             </if>
         </where>
@@ -48,7 +48,7 @@
             <if test="companyName != '' and companyName != null">
                 and company_name like #{companyName}
             </if>
-            <if test="status != '' and status != null">
+            <if test="status != null">
                 and status = #{status}
             </if>
         </where>
@@ -65,4 +65,42 @@
         order by ordered desc
         limit #{beginInd}, #{pageSize};
     </select>
+
+    <!--arg0代表传入的对象-->
+    <select id="limitSortAsc" resultMap="resultMap">
+        select *
+        from tb_brand
+        <where>
+            <if test="arg0.brandName != '' and arg0.brandName != null">
+                brand_name like #{arg0.brandName}
+            </if>
+            <if test="arg0.companyName != '' and arg0.companyName != null">
+                and company_name like #{arg0.companyName}
+            </if>
+            <if test="arg0.status != null">
+                and status = #{arg0.status}
+            </if>
+        </where>
+        order by ordered asc
+        limit  #{beginInd}, #{arg0.pageSize};
+    </select>
+
+    <select id="limitSortDesc" resultMap="resultMap">
+        select *
+        from tb_brand
+        <where>
+            <if test="arg0.brandName != '' and arg0.brandName != null">
+                brand_name like #{arg0.brandName}
+            </if>
+            <if test="arg0.companyName != '' and arg0.companyName != null">
+                and company_name like #{arg0.companyName}
+            </if>
+            <if test="arg0.status != null">
+                and status = #{arg0.status}
+            </if>
+        </where>
+        order by ordered desc
+        limit  #{beginInd}, #{arg0.pageSize};
+    </select>
+
 </mapper>

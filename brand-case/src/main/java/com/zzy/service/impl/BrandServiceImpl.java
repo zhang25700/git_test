@@ -2,6 +2,7 @@ package com.zzy.service.impl;
 
 import com.zzy.mapper.BrandMapper;
 import com.zzy.pojo.Brand;
+import com.zzy.pojo.BrandInfo;
 import com.zzy.pojo.PageBean;
 import com.zzy.service.BrandService;
 import com.zzy.util.SqlSessionFactoryUtil;
@@ -192,6 +193,56 @@ public class BrandServiceImpl implements BrandService {
         sqlSession.close();
 
         return new PageBean<Brand>(totalCount, brands);
+    }
+
+    /**
+     * 查询后进行升序
+     * @param brandInfo
+     * @param beginInd
+     * @return
+     */
+    @Override
+    public PageBean<Brand> limitSortAsc(BrandInfo<Brand> brandInfo, int beginInd) {
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        BrandMapper mapper = sqlSession.getMapper(BrandMapper.class);
+        //获取品牌
+        List<Brand> brands = mapper.limitSortAsc(brandInfo, beginInd);
+
+        System.out.println(brands);
+        //获取总个数
+        int conditionCount = mapper.conditionCount(brandInfo.getBrandName(), brandInfo.getCompanyName(), brandInfo.getStatus());
+
+        System.out.println(conditionCount);
+
+        sqlSession.close();
+
+        return new PageBean<Brand>(conditionCount, brands);
+    }
+
+    /**
+     * 查询后进行降序
+     * @param brandInfo
+     * @param beginInd
+     * @return
+     */
+    @Override
+    public PageBean<Brand> limitSortDesc(BrandInfo<Brand> brandInfo, int beginInd) {
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        BrandMapper mapper = sqlSession.getMapper(BrandMapper.class);
+        //获取品牌
+        List<Brand> brands = mapper.limitSortDesc(brandInfo, beginInd);
+
+        System.out.println(brands);
+        //获取总个数
+        int conditionCount = mapper.conditionCount(brandInfo.getBrandName(), brandInfo.getCompanyName(), brandInfo.getStatus());
+
+        System.out.println(conditionCount);
+
+        sqlSession.close();
+
+        return new PageBean<Brand>(conditionCount, brands);
     }
 
 

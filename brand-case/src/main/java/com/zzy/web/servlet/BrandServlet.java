@@ -224,4 +224,78 @@ public class BrandServlet extends BaseServlet {
         response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(jsonString);
     }
+    //查询后进行升序
+    public void limitSortAsc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //得到数据
+        String jsonStr = request.getReader().readLine();
+        BrandInfo brandInfo = JSON.parseObject(jsonStr, BrandInfo.class);
+        System.out.println("品牌信息：" + brandInfo);
+        //得到查询条件
+        String brandName = brandInfo.getBrandName();
+        //模糊查询
+        if (brandName != null && brandName.length() != 0) {
+            brandName = "%" + brandName + "%";
+            brandInfo.setBrandName(brandName);
+        }
+        String companyName = brandInfo.getCompanyName();
+        //模糊查询
+        if (companyName != null && companyName.length() != 0) {
+            companyName = "%" + companyName + "%";
+            brandInfo.setCompanyName(companyName);
+        }
+        Integer status = brandInfo.getStatus();
+        System.out.println(status);
+        //得到当前页数和一页个数
+        int currentPage = brandInfo.getCurrentPage();
+        int pageSize = brandInfo.getPageSize();
+        //计算出开始索引
+        int beginInd = (currentPage - 1) * pageSize;
+        //得到数据库的所有数据
+        PageBean brandPageBean = service.limitSortAsc(brandInfo, beginInd);
+        System.out.println(brandPageBean);
+        //将数据转为JSON
+        String jsonString = JSON.toJSONString(brandPageBean);
+
+        //发送JSON数据
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(jsonString);
+    }
+    //查询后进行降序
+    public void limitSortDesc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //得到数据
+        String jsonStr = request.getReader().readLine();
+        BrandInfo brandInfo = JSON.parseObject(jsonStr, BrandInfo.class);
+        System.out.println("品牌信息：" + brandInfo);
+        //得到查询条件
+        String brandName = brandInfo.getBrandName();
+        //模糊查询
+        if (brandName != null && brandName.length() != 0) {
+            brandName = "%" + brandName + "%";
+            brandInfo.setBrandName(brandName);
+        }
+        String companyName = brandInfo.getCompanyName();
+        //模糊查询
+        if (companyName != null && companyName.length() != 0) {
+            companyName = "%" + companyName + "%";
+            brandInfo.setCompanyName(companyName);
+        }
+        Integer status = brandInfo.getStatus();
+        System.out.println(status);
+        //得到当前页数和一页个数
+        int currentPage = brandInfo.getCurrentPage();
+        int pageSize = brandInfo.getPageSize();
+        //计算出开始索引
+        int beginInd = (currentPage - 1) * pageSize;
+        //得到数据库的所有数据
+        PageBean<Brand> brandPageBean = service.limitSortDesc(brandInfo, beginInd);
+        System.out.println(brandPageBean);
+        //将数据转为JSON
+        String jsonString = JSON.toJSONString(brandPageBean);
+
+        //发送JSON数据
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(jsonString);
+    }
 }

@@ -1,6 +1,7 @@
 package com.zzy.mapper;
 
 import com.zzy.pojo.Brand;
+import com.zzy.pojo.BrandInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -81,7 +82,34 @@ public interface BrandMapper {
      */
     int conditionCount(@Param("brandName") String brandName, @Param("companyName") String CompanyName,
                        @Param("status") Integer status);
+
+    /**
+     * 升序排序
+     * @param beginInd
+     * @param pageSize
+     * @return
+     */
     List<Brand> asc(@Param("beginInd") int beginInd, @Param("pageSize") int pageSize);
 
+    /**
+     * 降序排序
+     * @param beginInd
+     * @param pageSize
+     * @return
+     */
     List<Brand> desc(@Param("beginInd") int beginInd, @Param("pageSize") int pageSize);
+
+    /**
+     * 查询后进行升序
+     * @param brandInfo
+     * @return
+     */
+    List<Brand> limitSortAsc(BrandInfo<Brand> brandInfo, @Param("beginInd") int beginInd);
+
+    /**
+     * 查询后进行降序
+     * @param brandInfo
+     * @return
+     */
+    List<Brand> limitSortDesc(BrandInfo<Brand> brandInfo, @Param("beginInd") int beginInd);
 }

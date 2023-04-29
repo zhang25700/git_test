@@ -1,6 +1,7 @@
 package com.zzy.service;
 
 import com.zzy.pojo.Brand;
+import com.zzy.pojo.BrandInfo;
 import com.zzy.pojo.PageBean;
 import org.apache.ibatis.annotations.Param;
 
@@ -56,7 +57,32 @@ public interface BrandService {
     PageBean<Brand> selectByCondition(@Param("brandName") String brandName, @Param("companyName") String CompanyName,
                                   @Param("status") Integer status, @Param("beginInd") int beginInd, @Param("pageSize") int pageSize);
 
+    /**
+     * 升序排序
+     * @param beginInd
+     * @param pageSize
+     * @return
+     */
     PageBean<Brand> asc(@Param("beginInd") int beginInd, @Param("pageSize") int pageSize);
 
+    /**
+     * 降序排序
+     * @param beginInd
+     * @param pageSize
+     * @return
+     */
     PageBean<Brand> desc(@Param("beginInd") int beginInd, @Param("pageSize") int pageSize);
+    /**
+     * 查询后进行升序
+     * @param brandInfo
+     * @return
+     */
+    PageBean<Brand> limitSortAsc(BrandInfo<Brand> brandInfo, @Param("beginInd") int beginInd);
+
+    /**
+     * 查询后进行降序
+     * @param brandInfo
+     * @return
+     */
+    PageBean<Brand> limitSortDesc(BrandInfo<Brand> brandInfo, @Param("beginInd") int beginInd);
 }
